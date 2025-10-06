@@ -15,9 +15,9 @@ const Results = () => {
   const [loading, setLoading] = useState(true);
   const [weatherData, setWeatherData] = useState<any>(null);
 
-  const location = searchParams.get("location") || "";
-  const date = searchParams.get("date") || "";
-  const params = searchParams.get("params")?.split(",") || [];
+  const location = searchParams?.get("location") || "";
+  const date = searchParams?.get("date") || "";
+  const params = searchParams?.get("params")?.split(",") || [];
 
   useEffect(() => {
     // Simular llamada a la API

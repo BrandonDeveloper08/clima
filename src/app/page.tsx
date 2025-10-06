@@ -32,7 +32,7 @@ const Search = () => {
     PRECIPITACIONES: "0 mm",
     VIENTO: "10 km/h",
   });
-  const [selectedPosition, setSelectedPosition] = useState(null);
+  const [selectedPosition, setSelectedPosition] = useState<{lat: number, lng: number} | null>(null);
   const [selectedDistrict, setSelectedDistrict] = useState("");
   const [mapCenter, setMapCenter] = useState({ lat: -12.0464, lng: -77.0428 });
   const [mapZoom, setMapZoom] = useState(7);

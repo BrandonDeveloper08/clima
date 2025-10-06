@@ -20,7 +20,7 @@ export class WeatherForecast {
       const forecastDateObj = new Date(forecastDate);
       const forecasts: WeatherData = {};
       
-      for (const [variable, info] of modelsInfo.entries()) {
+      for (const [variable, info] of Array.from(modelsInfo.entries())) {
         if (info.training_completed && !info.error) {
           try {
             // Simular pronóstico usando datos históricos
@@ -97,7 +97,7 @@ export class WeatherForecast {
         lat, lon, START_DATE, END_DATE
       );
       
-      for (const [variable, data] of Object.entries(weatherData)) {
+      for (const [variable, data] of Array.from(Object.entries(weatherData))) {
         console.log(`\n[TRAIN] Entrenando modelo para ${variable}...`);
         
         try {
