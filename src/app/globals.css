@@ -1,0 +1,209 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 221.2 83.2% 53.3%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222.2 84% 4.9%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96%;
+    --accent-foreground: 222.2 84% 4.9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 221.2 83.2% 53.3%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 222.2 84% 4.9%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 224.3 76.3% 94.1%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Custom styles for weather app */
+.shadow-card {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.hide-caption-labels .rdp-caption_label {
+  display: none;
+}
+
+/* Weather animations */
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0px) translateX(0px); }
+  25% { transform: translateY(-20px) translateX(10px); }
+  50% { transform: translateY(-10px) translateX(-5px); }
+  75% { transform: translateY(-15px) translateX(8px); }
+}
+
+@keyframes float-medium {
+  0%, 100% { transform: translateY(0px) translateX(0px); }
+  33% { transform: translateY(-15px) translateX(-8px); }
+  66% { transform: translateY(-8px) translateX(12px); }
+}
+
+@keyframes float-fast {
+  0%, 100% { transform: translateY(0px) translateX(0px); }
+  50% { transform: translateY(-12px) translateX(6px); }
+}
+
+@keyframes wind-1 {
+  0% { transform: translateX(-100px); }
+  100% { transform: translateX(100vw); }
+}
+
+@keyframes wind-2 {
+  0% { transform: translateX(-80px); }
+  100% { transform: translateX(100vw); }
+}
+
+@keyframes wind-3 {
+  0% { transform: translateX(-120px); }
+  100% { transform: translateX(100vw); }
+}
+
+@keyframes particle-1 {
+  0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.6; }
+  50% { transform: translateY(-30px) translateX(20px); opacity: 1; }
+}
+
+@keyframes particle-2 {
+  0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.4; }
+  50% { transform: translateY(-25px) translateX(-15px); opacity: 0.8; }
+}
+
+@keyframes particle-3 {
+  0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.5; }
+  50% { transform: translateY(-35px) translateX(10px); opacity: 0.9; }
+}
+
+.animate-float-slow {
+  animation: float-slow 8s ease-in-out infinite;
+}
+
+.animate-float-medium {
+  animation: float-medium 6s ease-in-out infinite;
+}
+
+.animate-float-fast {
+  animation: float-fast 4s ease-in-out infinite;
+}
+
+.animate-wind-1 {
+  animation: wind-1 20s linear infinite;
+}
+
+.animate-wind-2 {
+  animation: wind-2 25s linear infinite;
+}
+
+.animate-wind-3 {
+  animation: wind-3 18s linear infinite;
+}
+
+.animate-particle-1 {
+  animation: particle-1 6s ease-in-out infinite;
+}
+
+.animate-particle-2 {
+  animation: particle-2 8s ease-in-out infinite;
+}
+
+.animate-particle-3 {
+  animation: particle-3 7s ease-in-out infinite;
+}
+
+/* Weather parameter colors */
+:root {
+  --temperature: 0 84% 60%;
+  --humidity: 200 100% 50%;
+  --precipitation: 220 100% 60%;
+  --wind: 160 100% 50%;
+}
+
+.bg-temperature-light {
+  background-color: hsl(var(--temperature) / 0.1);
+}
+
+.text-temperature {
+  color: hsl(var(--temperature));
+}
+
+.border-temperature {
+  border-color: hsl(var(--temperature));
+}
+
+.bg-humidity-light {
+  background-color: hsl(var(--humidity) / 0.1);
+}
+
+.text-humidity {
+  color: hsl(var(--humidity));
+}
+
+.border-humidity {
+  border-color: hsl(var(--humidity));
+}
+
+.bg-precipitation-light {
+  background-color: hsl(var(--precipitation) / 0.1);
+}
+
+.text-precipitation {
+  color: hsl(var(--precipitation));
+}
+
+.border-precipitation {
+  border-color: hsl(var(--precipitation));
+}
+
+.bg-wind-light {
+  background-color: hsl(var(--wind) / 0.1);
+}
+
+.text-wind {
+  color: hsl(var(--wind));
+}
+
+.border-wind {
+  border-color: hsl(var(--wind));
+}

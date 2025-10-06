@@ -1,8 +1,11 @@
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
+import ColourfulText from "@/components/ui/colourful-text";
+import FancyWeatherCard from "@/components/FancyWeatherCard";
 import { Button } from "@/components/ui/button";
 import WeatherCard from "@/components/WeatherCard";
 import CircularStats from "@/components/CircularStats";
+import { WeatherBackground } from "@/components/WeatherBackground";
 
 const Results = () => {
   const [searchParams] = useSearchParams();
@@ -37,7 +40,9 @@ const Results = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-primary">
+    <>
+      <WeatherBackground />
+      <main className="relative min-h-screen">
       <div className="container max-w-5xl mx-auto px-4 py-8">
         {/* Header */}
         <div className="flex items-center gap-4 mb-8">
@@ -51,7 +56,7 @@ const Results = () => {
           </Button>
           <div>
             <h1 className="text-3xl font-bold text-foreground">
-              Pronóstico para {location}
+              <ColourfulText text={`Pronóstico para ${location}`} />
             </h1>
             <p className="text-muted-foreground">{date}</p>
           </div>
@@ -61,14 +66,16 @@ const Results = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           {params.map((param) => {
             const data = weatherData[param as keyof typeof weatherData];
-            return data ? (
-              <WeatherCard
-                key={param}
-                parameter={param}
-                value={data.value}
-                description={data.description}
-              />
-            ) : null;
+            if (!data) return null;
+            const title = param;
+            return (
+              <div key={param} className="flex justify-center">
+                <FancyWeatherCard
+                  title={title}
+                  value={data.value}
+                />
+              </div>
+            );
           })}
         </div>
 
@@ -82,7 +89,8 @@ const Results = () => {
           date={date}
         />
       </div>
-    </div>
+      </main>
+    </>
   );
 };
 

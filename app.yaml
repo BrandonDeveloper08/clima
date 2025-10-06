@@ -1,0 +1,12 @@
+runtime: nodejs20
+
+handlers:
+  # Archivos estáticos (JS, CSS, imágenes, etc.)
+  - url: /(.*\.(js|css|ico|png|jpg|jpeg|svg|json|txt|html|woff|woff2))$
+    static_files: dist/\1
+    upload: dist/.*\.(js|css|ico|png|jpg|jpeg|svg|json|txt|html|woff|woff2)
+
+  # Redirigir todas las rutas (para React Router o SPA)
+  - url: /.*
+    static_files: dist/index.html
+    upload: dist/index.html

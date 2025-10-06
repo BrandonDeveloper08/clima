@@ -9,22 +9,22 @@ interface WeatherCardProps {
 
 const WeatherCard = ({ parameter, value, description }: WeatherCardProps) => {
   const getIcon = () => {
-    switch (parameter) {
+    switch (parameter.toUpperCase()) {
       case "TEMPERATURA":
-        return <Thermometer className="h-12 w-12" />;
+        return <img src="https://cdn-icons-png.flaticon.com/512/1684/1684375.png" alt="Temperatura" className="h-12 w-12" />;
       case "HUMEDAD":
-        return <Droplets className="h-12 w-12" />;
+        return <img src="https://cdn-icons-png.flaticon.com/512/728/728093.png" alt="Humedad" className="h-12 w-12" />;
       case "PRECIPITACIONES":
-        return <CloudRain className="h-12 w-12" />;
+        return <img src="https://cdn-icons-png.flaticon.com/512/4150/4150897.png" alt="Lluvia" className="h-12 w-12" />;
       case "VIENTO":
-        return <Wind className="h-12 w-12" />;
+        return <img src="https://cdn-icons-png.flaticon.com/512/414/414927.png" alt="Viento" className="h-12 w-12" />;
       default:
         return null;
     }
   };
 
   const getColorClass = () => {
-    switch (parameter) {
+    switch (parameter.toUpperCase()) {
       case "TEMPERATURA":
         return "text-temperature bg-temperature-light";
       case "HUMEDAD":

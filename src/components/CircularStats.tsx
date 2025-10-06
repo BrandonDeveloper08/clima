@@ -1,4 +1,5 @@
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
+import { cn } from "@/lib/utils";
 
 interface StatData {
   parameter: string;
@@ -27,54 +28,88 @@ const CircularStats = ({ data, location, date }: CircularStatsProps) => {
     }
   };
 
+  const getLightColorClass = (parameter: string) => {
+    switch (parameter) {
+      case "TEMPERATURA":
+        return "bg-temperature-light";
+      case "HUMEDAD":
+        return "bg-humidity-light";
+      case "PRECIPITACIONES":
+        return "bg-precipitation-light";
+      case "VIENTO":
+        return "bg-wind-light";
+      default:
+        return "bg-secondary";
+    }
+  };
+
   return (
-    <div className="bg-card rounded-2xl shadow-card p-8">
-      <h2 className="text-2xl font-bold text-center mb-8 text-foreground">
-        ESTADÍSTICAS CIRCULARES
-      </h2>
+    <div
+      className="bg-card/80 backdrop-blur-sm rounded-2xl p-8"
+      style={{ boxShadow: "var(--shadow-relief)" }}
+    >
+      <div className="relative z-10">
+        <h2 className="text-2xl font-bold text-center mb-8 text-foreground">
+          ESTADÍSTICAS CIRCULARES
+        </h2>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
-        {data.map((item) => {
-          const chartData = [
-            { value: item.percentage },
-            { value: 100 - item.percentage },
-          ];
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+          {data.map((item) => {
+            const chartData = [
+              { value: item.percentage },
+              { value: 100 - item.percentage },
+            ];
+            const color = getColor(item.parameter);
+            const lightColorClass = getLightColorClass(item.parameter);
 
-          return (
-            <div key={item.parameter} className="flex flex-col items-center">
-              <ResponsiveContainer width="100%" height={120}>
-                <PieChart>
-                  <Pie
-                    data={chartData}
-                    cx="50%"
-                    cy="50%"
-                    innerRadius={35}
-                    outerRadius={50}
-                    startAngle={90}
-                    endAngle={-270}
-                    dataKey="value"
+            return (
+              <div
+                key={item.parameter}
+                className={cn(
+                  "flex flex-col items-center p-4 rounded-xl",
+                  lightColorClass
+                )}
+              >
+                <ResponsiveContainer width="100%" height={120}>
+                  <PieChart>
+                    <Pie
+                      data={chartData}
+                      cx="50%"
+                      cy="50%"
+                      innerRadius={35}
+                      outerRadius={50}
+                      startAngle={90}
+                      endAngle={-270}
+                      dataKey="value"
+                    >
+                      <Cell fill={color} />
+                      <Cell fill="hsl(var(--muted) / 0.2)" />
+                    </Pie>
+                  </PieChart>
+                </ResponsiveContainer>
+                <div className="text-center mt-2">
+                  <p
+                    className="text-2xl font-bold mb-1"
+                    style={{ color: color }}
                   >
-                    <Cell fill={getColor(item.parameter)} />
-                    <Cell fill="hsl(var(--muted))" />
-                  </Pie>
-                </PieChart>
-              </ResponsiveContainer>
-              <div className="text-center mt-2">
-                <p className="text-2xl font-bold text-foreground mb-1">
-                  {item.percentage}%
-                </p>
-                <p className="text-xs font-medium text-muted-foreground uppercase">
-                  {item.parameter}
-                </p>
+                    {item.percentage}%
+                  </p>
+                  <p
+                    className="text-xs font-medium uppercase"
+                    style={{ color: color }}
+                  >
+                    {item.parameter}
+                  </p>
+                </div>
               </div>
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
 
-      <p className="text-center text-sm text-muted-foreground">
-        Probabilidades individuales para {location} el {date}
-      </p>
+        <p className="text-center text-sm text-muted-foreground">
+          Probabilidades individuales para {location} el {date}
+        </p>
+      </div>
     </div>
   );
 };

@@ -1,73 +1,192 @@
-# Welcome to your Lovable project
+# SkyCast - Pronóstico Meteorológico con Next.js
 
-## Project info
+Una aplicación de pronóstico meteorológico inteligente construida con Next.js, que incluye APIs backend y frontend React.
 
-**URL**: https://lovable.dev/projects/792424dc-ef12-4564-8a31-5a61532ca273
+## 🚀 Características
 
-## How can I edit this code?
+- **API Backend**: Endpoints REST para pronósticos meteorológicos
+- **Frontend React**: Interfaz moderna con mapas interactivos
+- **Integración Meteomatics**: Datos meteorológicos en tiempo real
+- **Modelos LSTM**: Predicciones inteligentes (simuladas)
+- **Mapas Google**: Selección de ubicación interactiva
+- **UI Moderna**: Componentes con Tailwind CSS y Radix UI
 
-There are several ways of editing your application.
+## 📋 Requisitos
 
-**Use Lovable**
+- Node.js 18+ 
+- npm o yarn
+- Cuenta de Meteomatics API
+- Google Maps API Key
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/792424dc-ef12-4564-8a31-5a61532ca273) and start prompting.
+## 🛠️ Instalación
 
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+1. **Clonar el repositorio**
+```bash
+git clone <tu-repo>
+cd skycast-nextjs
 ```
 
-**Edit a file directly in GitHub**
+2. **Instalar dependencias**
+```bash
+npm install
+# o
+yarn install
+```
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+3. **Configurar variables de entorno**
+Crear archivo `.env.local`:
+```env
+# Meteomatics API Credentials
+MET_USER=tu_usuario_meteomatics
+MET_PASS=tu_password_meteomatics
 
-**Use GitHub Codespaces**
+# Google Maps API Key
+NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=tu_google_maps_api_key
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+4. **Ejecutar en desarrollo**
+```bash
+npm run dev
+# o
+yarn dev
+```
 
-## What technologies are used for this project?
+La aplicación estará disponible en `http://localhost:3000`
 
-This project is built with:
+## 🏗️ Estructura del Proyecto
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+```
+src/
+├── app/                    # Next.js App Router
+│   ├── api/               # API Routes
+│   │   ├── forecast/      # Endpoint de pronósticos
+│   │   └── status/        # Estado de la API
+│   ├── results/           # Página de resultados
+│   ├── layout.tsx         # Layout principal
+│   ├── page.tsx           # Página de búsqueda
+│   └── globals.css        # Estilos globales
+├── components/            # Componentes React
+│   ├── ui/               # Componentes UI base
+│   ├── FancyWeatherCard.tsx
+│   ├── ParameterToggle.tsx
+│   ├── CircularStats.tsx
+│   └── WeatherBackground.tsx
+├── lib/                  # Utilidades y lógica
+│   ├── weather-api.ts    # Configuración API
+│   ├── meteomatics-client.ts
+│   └── weather-forecast.ts
+└── hooks/                # Custom hooks
+    └── use-toast.ts
+```
 
-## How can I deploy this project?
+## 🔌 API Endpoints
 
-Simply open [Lovable](https://lovable.dev/projects/792424dc-ef12-4564-8a31-5a61532ca273) and click on Share -> Publish.
+### GET /api/forecast
+Genera pronósticos meteorológicos
 
-## Can I connect a custom domain to my Lovable project?
+**Parámetros:**
+- `lat` (number): Latitud (-90 a 90)
+- `lon` (number): Longitud (-180 a 180)  
+- `forecast_date` (string): Fecha en formato YYYY-MM-DD
+- `days_ahead` (number): Días de pronóstico (1-30)
 
-Yes, you can!
+**Ejemplo:**
+```
+GET /api/forecast?lat=-12.04318&lon=-77.02824&forecast_date=2024-01-15&days_ahead=7
+```
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+### POST /api/forecast
+Mismo endpoint pero con datos en el body
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+**Body:**
+```json
+{
+  "lat": -12.04318,
+  "lon": -77.02824,
+  "forecast_date": "2024-01-15",
+  "days_ahead": 7
+}
+```
+
+### GET /api/status
+Estado de la API
+
+## 🎨 Componentes Principales
+
+### Search Page (`/`)
+- Mapa interactivo con Google Maps
+- Selección de ubicación por distrito
+- Calendario para fecha de pronóstico
+- Toggle de parámetros meteorológicos
+
+### Results Page (`/results`)
+- Tarjetas de pronóstico elegantes
+- Estadísticas circulares
+- Métricas de precisión del modelo
+
+## 🔧 Configuración Avanzada
+
+### Variables Meteorológicas
+Editar `src/lib/weather-api.ts` para agregar nuevas variables:
+
+```typescript
+export const WEATHER_VARIABLES = {
+  temperature: {
+    param: 't_2m:C',
+    unit: '°C',
+    description: 'Temperatura a 2m'
+  },
+  // Agregar más variables...
+};
+```
+
+### Personalización de Modelos
+Modificar `src/lib/weather-forecast.ts` para implementar modelos reales de ML.
+
+## 🚀 Despliegue
+
+### Vercel (Recomendado)
+```bash
+npm run build
+vercel --prod
+```
+
+### Docker
+```dockerfile
+FROM node:18-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN npm run build
+EXPOSE 3000
+CMD ["npm", "start"]
+```
+
+## 📊 Variables de Entorno
+
+| Variable | Descripción | Requerida |
+|----------|-------------|-----------|
+| `MET_USER` | Usuario Meteomatics | ✅ |
+| `MET_PASS` | Password Meteomatics | ✅ |
+| `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY` | Google Maps API Key | ✅ |
+
+## 🤝 Contribuir
+
+1. Fork el proyecto
+2. Crear rama feature (`git checkout -b feature/AmazingFeature`)
+3. Commit cambios (`git commit -m 'Add AmazingFeature'`)
+4. Push a la rama (`git push origin feature/AmazingFeature`)
+5. Abrir Pull Request
+
+## 📝 Licencia
+
+Este proyecto está bajo la Licencia MIT. Ver `LICENSE` para más detalles.
+
+## 🆘 Soporte
+
+Para soporte, crear un issue en GitHub o contactar al equipo de desarrollo.
+
+---
+
+**SkyCast** - Pronósticos meteorológicos inteligentes 🌤️
