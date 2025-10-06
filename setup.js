@@ -42,3 +42,4 @@ console.log('\n🔧 Variables de entorno configuradas:');
 console.log('- MET_USER y MET_PASS para Meteomatics API');
 console.log('- NEXT_PUBLIC_GOOGLE_MAPS_API_KEY para Google Maps');
 console.log('\n📖 Lee el README.md para más información');
+
